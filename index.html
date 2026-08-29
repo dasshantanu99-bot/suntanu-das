@@ -7,6 +7,19 @@
     <title>Suntanu Das | Professional Musician & Music Teacher in Kolkata</title>
     <meta name="description"
         content="Suntanu Das is a professional musician and music teacher in Kolkata with 25+ years of experience, offering guitar, keyboard and bass lessons for beginners, intermediate and advanced students.">
+    <meta name="keywords"
+        content="Suntanu Das, guitar teacher Kolkata, music teacher Kolkata, Trinity Rock and Pop Guitar, Piano Lessons Kolkata, Bass Guitar Kolkata, Rock House Music School">
+    <meta name="author" content="Suntanu Das">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Suntanu Das | Professional Musician & Music Teacher in Kolkata">
+    <meta property="og:description"
+        content="Suntanu Das is a professional musician and music teacher in Kolkata with 25+ years of experience, offering guitar, keyboard and bass lessons.">
+    <meta property="og:image" content="rock-house-music-school-logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Suntanu Das | Professional Musician & Music Teacher">
+    <meta name="twitter:description" content="25+ years of musical experience, Trinity Grade 8 Rock & Pop Guitarist.">
+    <meta name="twitter:image" content="rock-house-music-school-logo.png">
+    <link rel="icon" type="image/png" href="rock-house-music-school-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -58,7 +71,7 @@
     <section id="home" class="hero">
 
         <div class="hero-content">
-
+            <h1 class="hero-title">SUNTANU DAS</h1>
             <h2 class="hero-profession">Music Educator | Guitar & Piano Instructor | Trinity Grade 8 Rock & Pop | Sound
                 Engineer | Music Producer | 25+ Years of Musical Experience</h2>
         </div>
@@ -411,7 +424,7 @@
                 </div>
 
                 <div class="contact-form-container">
-                    <form class="contact-form" onsubmit="event.preventDefault();">
+                    <form class="contact-form" id="contact-form">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" placeholder="Your Name" required>
@@ -454,7 +467,8 @@
                             <textarea id="message" rows="4"
                                 placeholder="Tell me about your musical goals..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-full">SEND ENQUIRY</button>
+                        <div id="form-status" class="form-status" style="display: none;"></div>
+                        <button type="submit" class="btn btn-primary w-full" id="submit-enquiry-btn">SEND ENQUIRY</button>
                     </form>
                 </div>
             </div>

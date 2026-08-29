@@ -97,11 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
             images.push(img);
         }
         
-        images[0].onload = () => {
-            canvas.width = images[0].width;
-            canvas.height = images[0].height;
-            context.drawImage(images[0], 0, 0);
+        const renderFirstFrame = () => {
+            if (images[0].naturalWidth) {
+                canvas.width = images[0].naturalWidth;
+                canvas.height = images[0].naturalHeight;
+                context.drawImage(images[0], 0, 0);
+            }
         };
+
+        if (images[0].complete && images[0].naturalHeight !== 0) {
+            renderFirstFrame();
+        } else {
+            images[0].onload = renderFirstFrame;
+        }
 
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
@@ -135,5 +143,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }, { passive: true });
+    }
+
+    // --- Contact Form Submission Handler ---
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    if (contactForm && formStatus) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name')?.value.trim() || '';
+            const phone = document.getElementById('phone')?.value.trim() || '';
+            const email = document.getElementById('email')?.value.trim() || '';
+            const instrument = document.getElementById('instrument')?.value || 'Guitar';
+            const level = document.getElementById('level')?.value || 'Beginner';
+            const format = document.getElementById('format')?.value || 'Online';
+            const message = document.getElementById('message')?.value.trim() || '';
+
+            if (!name || !phone) {
+                formStatus.className = 'form-status error';
+                formStatus.textContent = 'Please fill in both your Name and Phone / WhatsApp number.';
+                formStatus.style.display = 'block';
+                return;
+            }
+
+            // Create formatted WhatsApp message
+            let waText = `Hi Suntanu! I would like to enquire about music lessons.\n\n`;
+            waText += `*Name:* ${name}\n`;
+            waText += `*Phone:* ${phone}\n`;
+            if (email) waText += `*Email:* ${email}\n`;
+            waText += `*Instrument:* ${instrument}\n`;
+            waText += `*Level:* ${level}\n`;
+            waText += `*Format:* ${format}\n`;
+            if (message) waText += `*Goals / Message:* ${message}\n`;
+
+            const waUrl = `https://wa.me/919836402923?text=${encodeURIComponent(waText)}`;
+
+            formStatus.className = 'form-status success';
+            formStatus.innerHTML = `✓ Thank you, <strong>${name}</strong>! Redirecting you to WhatsApp to send your enquiry...`;
+            formStatus.style.display = 'block';
+
+            setTimeout(() => {
+                window.open(waUrl, '_blank', 'noopener,noreferrer');
+            }, 800);
+        });
     }
 });

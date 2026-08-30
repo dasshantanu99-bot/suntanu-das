@@ -424,47 +424,54 @@
                 </div>
 
                 <div class="contact-form-container">
-                    <form class="contact-form" id="contact-form">
+                    <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="https://formsubmit.co/das.shantanu99@gmail.com">
+                        <input type="hidden" name="form-name" value="contact">
+                        <input type="hidden" name="_subject" value="New Music Lesson Enquiry - Suntanu Das Portfolio">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+                        <p style="display:none">
+                            <label>Don’t fill this out if you're human: <input name="bot-field"></label>
+                        </p>
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" placeholder="Your Name" required>
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone / WhatsApp</label>
-                            <input type="tel" id="phone" placeholder="Your Phone Number" required>
+                            <label for="phone">Phone / WhatsApp *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="Your Email Address">
+                            <input type="email" id="email" name="email" placeholder="Your Email Address">
                         </div>
                         <div class="form-row">
                             <div class="form-group w-50">
                                 <label for="instrument">Instrument</label>
-                                <select id="instrument">
-                                    <option>Guitar</option>
-                                    <option>Keyboard / Piano</option>
-                                    <option>Bass Guitar</option>
+                                <select id="instrument" name="instrument">
+                                    <option value="Guitar">Guitar</option>
+                                    <option value="Keyboard / Piano">Keyboard / Piano</option>
+                                    <option value="Bass Guitar">Bass Guitar</option>
                                 </select>
                             </div>
                             <div class="form-group w-50">
                                 <label for="level">Current Level</label>
-                                <select id="level">
-                                    <option>Beginner</option>
-                                    <option>Intermediate</option>
-                                    <option>Advanced</option>
+                                <select id="level" name="level">
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="format">Online / Offline</label>
-                            <select id="format">
-                                <option>Online</option>
-                                <option>Offline</option>
+                            <select id="format" name="format">
+                                <option value="Online">Online</option>
+                                <option value="Offline">Offline</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
-                            <textarea id="message" rows="4"
+                            <textarea id="message" name="message" rows="4"
                                 placeholder="Tell me about your musical goals..."></textarea>
                         </div>
                         <div id="form-status" class="form-status" style="display: none;"></div>

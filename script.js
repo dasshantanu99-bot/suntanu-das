@@ -145,12 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    // --- Contact Form Submission Handler ---
+    // --- Contact Form Submission Handler (Emails directly to das.shantanu99@gmail.com) ---
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-enquiry-btn');
 
     if (contactForm && formStatus) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const name = document.getElementById('name')?.value.trim() || '';
@@ -168,25 +169,69 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Create formatted WhatsApp message
-            let waText = `Hi Suntanu! I would like to enquire about music lessons.\n\n`;
+            // WhatsApp link for instant follow-up
+            let waText = `Hi Suntanu! I just sent you an enquiry for music lessons from your website.\n\n`;
             waText += `*Name:* ${name}\n`;
             waText += `*Phone:* ${phone}\n`;
             if (email) waText += `*Email:* ${email}\n`;
             waText += `*Instrument:* ${instrument}\n`;
             waText += `*Level:* ${level}\n`;
             waText += `*Format:* ${format}\n`;
-            if (message) waText += `*Goals / Message:* ${message}\n`;
-
+            if (message) waText += `*Message:* ${message}\n`;
             const waUrl = `https://wa.me/919836402923?text=${encodeURIComponent(waText)}`;
 
-            formStatus.className = 'form-status success';
-            formStatus.innerHTML = `✓ Thank you, <strong>${name}</strong>! Redirecting you to WhatsApp to send your enquiry...`;
-            formStatus.style.display = 'block';
+            // Set loading state
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'SENDING ENQUIRY...';
+            }
 
-            setTimeout(() => {
-                window.open(waUrl, '_blank', 'noopener,noreferrer');
-            }, 800);
+            formStatus.className = 'form-status';
+            formStatus.style.display = 'block';
+            formStatus.innerHTML = 'Sending your enquiry to Suntanu Das...';
+
+            const payload = {
+                name: name,
+                phone: phone,
+                email: email || 'Not provided',
+                instrument: instrument,
+                level: level,
+                format: format,
+                message: message || 'No specific message provided',
+                _subject: `New Music Lesson Enquiry: ${name} (${instrument})`,
+                _template: 'table',
+                _captcha: 'false'
+            };
+
+            try {
+                const response = await fetch('https://formsubmit.co/ajax/das.shantanu99@gmail.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok || data.success === 'true' || data.success === true) {
+                    formStatus.className = 'form-status success';
+                    formStatus.innerHTML = `✓ <strong>Thank you, ${name}!</strong> Your enquiry has been sent to Suntanu Das. You will receive a response soon.<br><br><a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="color: #25D366; text-decoration: underline; font-weight: 600;">Want a quick reply? Chat directly on WhatsApp &rarr;</a>`;
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.message || 'Submission error');
+                }
+            } catch (err) {
+                console.error('Submission error:', err);
+                formStatus.className = 'form-status error';
+                formStatus.innerHTML = `There was an issue sending your message right now.<br><a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; font-weight: 600;">Click here to send your enquiry directly via WhatsApp &rarr;</a>`;
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'SEND ENQUIRY';
+                }
+            }
         });
     }
 });

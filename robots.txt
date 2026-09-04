@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://suntanudas.netlify.app/sitemap.xml
